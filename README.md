@@ -49,8 +49,8 @@
 Нужен только Python 3.8+. Ставить ничего не надо.
 
 ```bash
-git clone https://github.com/<ваш-аккаунт>/bakugan-battle-brawlers.git
-cd bakugan-battle-brawlers
+git clone https://github.com/loliksudoc/bakugan.git
+cd bakugan
 python server.py
 ```
 
