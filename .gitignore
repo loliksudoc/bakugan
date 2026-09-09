@@ -1,0 +1,12 @@
+# база создаётся при первом запуске
+bakugan.db
+bakugan.db-journal
+bakugan.db-wal
+bakugan.db-shm
+
+# служебное
+__pycache__/
+*.pyc
+.claude/
+.DS_Store
+Thumbs.db

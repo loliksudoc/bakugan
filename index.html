@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>БАКУГАН — Битва Бойцов</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="app">
+  <header>
+    <div class="logo">БАКУГАН<span>БИТВА БОЙЦОВ</span></div>
+
+    <div class="score">
+      <div class="sc me"><b id="scMe">0</b><span>ВЫ</span></div>
+      <div class="sc-div">врат до победы: 3</div>
+      <div class="sc ai"><b id="scAi">0</b><span id="scAiName">МАСКЕРАД</span></div>
+    </div>
+
+    <div class="hright">
+      <div id="userChip" class="userchip"></div>
+      <div class="hbtns">
+        <button id="btnShop" class="ghost gold">🛒 Магазин</button>
+        <button id="btnFriends" class="ghost">👥 Друзья<i id="frBadge" class="badge hidden"></i></button>
+        <button id="btnSound" class="ghost">🔊 Звук</button>
+        <button id="btnSurrender" class="ghost hidden">🏳 Сдаться</button>
+        <button id="btnRules" class="ghost">Правила</button>
+        <button id="btnRestart" class="ghost">В лобби</button>
+        <button id="btnLogout" class="ghost">Выйти</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <aside class="panel" id="leftPanel">
+      <h3>Ваши бакуганы</h3>
+      <div id="playerHand" class="hand"></div>
+      <h3>Карты способностей</h3>
+      <div id="playerAbilities" class="abilities"></div>
+    </aside>
+
+    <section id="arena">
+      <div class="canvaswrap"><canvas id="field" width="860" height="560"></canvas></div>
+      <div id="hint">Соберите команду, чтобы начать бой</div>
+      <div class="gatebar">
+        <div class="gbtitle">Ваши карты врат <em id="gateDeckCount"></em></div>
+        <div id="gateHand" class="gatehand"></div>
+      </div>
+    </section>
+
+    <aside class="panel" id="rightPanel">
+      <h3 id="oppTitle">Маскерад</h3>
+      <div id="aiHand" class="hand small"></div>
+      <div class="aimeta">
+        <span>Карт врат: <b id="aiGates">0</b></span>
+        <span>Способностей: <b id="aiAbil">0</b></span>
+      </div>
+      <h3>Таблица стихий</h3>
+      <div class="cycle" id="cycleBox"></div>
+      <p class="tip">Каждая стихия бьёт следующую по кругу: <b>+100 G</b></p>
+      <h3>Статистика</h3>
+      <div class="stats" id="statsBox"></div>
+    </aside>
+  </main>
+</div>
+
+<!-- ============ ВХОД / РЕГИСТРАЦИЯ ============ -->
+<div id="authOverlay" class="overlay hidden">
+  <div class="box wide">
+    <h2>Бойцы Бакуган</h2>
+    <p class="sub" id="authHint"></p>
+
+    <div class="tabs" id="authTabs"></div>
+
+    <div class="authform">
+      <input id="authName" maxlength="16" placeholder="Никнейм" autocomplete="username">
+      <input id="authPass" type="password" maxlength="64" placeholder="Пароль" autocomplete="current-password">
+    </div>
+
+    <div id="authElemWrap">
+      <div class="dlabel">Выберите свою стихию</div>
+      <div class="elempick" id="elemPick"></div>
+    </div>
+
+    <div class="msg" id="authMsg"></div>
+    <button id="btnAuth" class="primary">ВОЙТИ</button>
+  </div>
+</div>
+
+<!-- ============ МАГАЗИН ============ -->
+<div id="shopOverlay" class="overlay hidden">
+  <div class="box wide shop">
+    <div class="shophead">
+      <h2>Магазин</h2>
+      <div class="shoptok" id="shopTokens"></div>
+    </div>
+    <div class="tabs" id="shopTabs"></div>
+    <div class="msg" id="shopMsg"></div>
+    <div id="shopBody"></div>
+    <button id="btnCloseShop" class="primary">ЗАКРЫТЬ</button>
+  </div>
+</div>
+
+<!-- ============ ЛОББИ: СБОРКА КОМАНДЫ ============ -->
+<div id="startOverlay" class="overlay hidden">
+  <div class="box wide">
+    <h2>Собери свою команду</h2>
+    <p class="sub">Выберите <b>3 бакугана</b> из своей коллекции. Суммарная G-сила не должна превышать лимит.</p>
+
+    <div class="moderow" id="modeBox"></div>
+
+    <div class="diffrow" id="diffRow">
+      <span class="dlabel">Сложность:</span>
+      <div class="diffs" id="diffBox"></div>
+    </div>
+    <div class="diffrow"><button id="btnShop2" class="ghost gold">🛒 В магазин</button></div>
+
+    <div class="tabs" id="attrTabs"></div>
+    <div id="pickList" class="picklist"></div>
+
+    <p class="sub small" id="lobbyDeck"></p>
+
+    <div class="teambar">
+      <div id="teamSlots" class="teamslots"></div>
+      <div class="tsum">Сумма: <b id="teamSum">0</b> / <span id="teamCap">1150</span> G</div>
+    </div>
+    <button id="btnStart" class="primary" disabled>В БОЙ!</button>
+  </div>
+</div>
+
+<!-- ============ ДРУЗЬЯ ============ -->
+<div id="friendsOverlay" class="overlay hidden">
+  <div class="box wide">
+    <h2>Друзья</h2>
+    <p class="sub">Добавляйте бойцов по никнейму и зовите их на бой напрямую, минуя общую очередь.</p>
+    <div class="row2 addfr">
+      <input id="frName" maxlength="16" placeholder="Никнейм бойца" autocomplete="off">
+      <button class="mini" id="btnFrAdd">Добавить</button>
+    </div>
+    <div class="msg" id="frMsg"></div>
+    <div id="frBody"></div>
+    <button id="btnCloseFriends" class="primary">ЗАКРЫТЬ</button>
+  </div>
+</div>
+
+<!-- ============ ПОИСК СОПЕРНИКА ============ -->
+<div id="mmOverlay" class="overlay hidden">
+  <div class="box">
+    <h2>Онлайн-бой</h2>
+    <p class="sub" id="mmText">Ищем соперника…</p>
+    <div class="mmspin"><span></span><span></span><span></span></div>
+    <div id="mmOpp"></div>
+    <button id="btnMmCancel" class="ghost">Отмена</button>
+  </div>
+</div>
+
+<!-- ============ БИТВА ============ -->
+<div id="battleOverlay" class="overlay hidden">
+  <div class="box battle" id="battleBox">
+    <h2 id="bTitle">БИТВА!</h2>
+    <div class="gateinfo" id="bGate"></div>
+    <div class="brow">
+      <div class="bside" id="bLeft"></div>
+      <div class="bvs">VS</div>
+      <div class="bside" id="bRight"></div>
+    </div>
+    <canvas id="bfx" width="700" height="215"></canvas>
+    <div id="bPick" class="bpick"></div>
+    <div id="bLog" class="blog"></div>
+    <button id="bBtn" class="primary hidden">Продолжить</button>
+  </div>
+</div>
+
+<!-- ============ ПРАВИЛА ============ -->
+<div id="rulesOverlay" class="overlay hidden">
+  <div class="box wide">
+    <h2>Правила</h2>
+    <div class="rules">
+      <p><b>Цель.</b> Выиграть <b>3 карты врат</b> раньше соперника.</p>
+      <p><b>1. Врата.</b> В начале своего хода вы выкладываете на арену одну карту врат
+      из руки — выберите карту снизу, затем свободную площадку на поле. Игроки делают
+      это <i>по очереди</i>, на арене одновременно не больше трёх врат.
+      На <b>своих</b> вратах ваш бакуган получает <b>+50 G</b>.</p>
+      <p><b>2. Бросок.</b> Выберите бакугана, затем нажатием (<b>пробел</b> или клик по полю)
+      зафиксируйте сначала <i>угол</i>, потом <i>силу</i>. Шар катится с трением
+      и раскрывается там, где остановится.</p>
+      <p><b>3. Промах.</b> Остановились не на вратах (или на вратах со своим же бакуганом) —
+      бакуган возвращается в руку, ход переходит сопернику.</p>
+      <p><b>4. Битва.</b> Раскрылись на вратах с бакуганом соперника — каждый может сыграть
+      одну карту способности, затем сравниваются итоговые G-силы.
+      При равенстве врата удерживает защитник.</p>
+      <p><b>5. После битвы.</b> Победитель забирает врата (+1 очко), оба бакугана
+      возвращаются в руки, освободившуюся площадку займут новые врата.</p>
+      <p><b>Стихия карт.</b> <span id="resoNote"></span></p>
+      <p><b>Жетоны.</b> За бой начисляются жетоны — больше за победу, за каждые взятые
+      врата и за высокую сложность. Тратятся в магазине на бакуганов, карты,
+      смену никнейма и смену стихии.</p>
+      <p><b>Стихии.</b> Пирус → Вентус → Субтерра → Аквос → Хаос → Гаус → Пирус (+100 G).</p>
+      <p><b>Карты врат:</b></p>
+      <ul id="gateLegend"></ul>
+      <p><b>Карты способностей:</b></p>
+      <ul id="abilLegend"></ul>
+    </div>
+    <button id="btnCloseRules" class="primary">Понятно</button>
+  </div>
+</div>
+
+<!-- ============ ФИНАЛ ============ -->
+<div id="endOverlay" class="overlay hidden">
+  <div class="box">
+    <h2 id="endTitle">ПОБЕДА!</h2>
+    <p id="endText" class="sub"></p>
+    <div class="reward" id="endReward"></div>
+    <div class="stats" id="endStats"></div>
+    <button id="btnAgain" class="primary">В лобби</button>
+  </div>
+</div>
+
+<script src="js/sound.js"></script>
+<script src="js/api.js"></script>
+<script src="js/catalog.js"></script>
+<script src="js/creatures.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/game.js"></script>
+<script src="js/mp.js"></script>
+<script src="js/friends.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
