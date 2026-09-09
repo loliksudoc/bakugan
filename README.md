@@ -1,52 +1,56 @@
 <div align="center">
 
-# 🔥 БАКУГАН — Битва Бойцов
+# 🔥 BAKUGAN — Battle Brawlers
 
-**Браузерная игра по мотивам Bakugan: бросок с физикой, карты врат, коллекция, магазин и онлайн-бои.**
+**A browser game inspired by Bakugan: physics-based throwing, Gate cards, a collection, a shop and online matches.**
 
-Ни одной библиотеки, ни одной картинки, ни одного `pip install`.
-Вся графика рисуется кодом на canvas, все звуки синтезируются через Web Audio,
-сервер — Python из стандартной поставки, данные — SQLite3.
+No libraries, no image files, no `pip install`.
+Every sprite is drawn in code on a canvas, every sound is synthesised through Web Audio,
+the server is plain Python from the standard library, the data lives in SQLite3.
 
 [![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![SQLite](https://img.shields.io/badge/SQLite-3-003B57?logo=sqlite&logoColor=white)](https://www.sqlite.org/)
 ![Vanilla JS](https://img.shields.io/badge/JavaScript-vanilla-F7DF1E?logo=javascript&logoColor=black)
-![Зависимости](https://img.shields.io/badge/зависимости-0-brightgreen)
-![Онлайн](https://img.shields.io/badge/мультиплеер-есть-ff4b26)
-![Лицензия](https://img.shields.io/badge/лицензия-MIT-blue)
+![Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen)
+![Multiplayer](https://img.shields.io/badge/multiplayer-yes-ff4b26)
+![License](https://img.shields.io/badge/license-MIT-blue)
 
-<img src="docs/creatures.png" alt="36 бакуганов: все нарисованы кодом" width="100%">
+**English** · [Русский](README.ru.md)
 
-<sub>Все 36 бакуганов. Ни одного файла с картинкой — каждое существо собирается процедурно на canvas.</sub>
+<img src="docs/creatures.png" alt="36 Bakugan, all drawn in code" width="100%">
+
+<sub>All 36 Bakugan. Not a single image file — every creature is assembled procedurally on a canvas.</sub>
 
 </div>
 
+> **Note:** the game interface is in Russian. This README is the English guide to it.
+
 ---
 
-## Что это
+## What it is
 
-Настольная Bakugan, перенесённая в браузер целиком: вы выкладываете карты врат,
-бросаете бакугана на арену, он катится с трением и раскрывается там, где остановится.
-Если попал на врата соперника — начинается битва: карты способностей, стихийные
-преимущества, анимация атаки и защиты, построчный расчёт G-силы.
+The Bakugan tabletop game moved into the browser in full: you lay down Gate cards,
+throw a Bakugan onto the arena, it rolls with friction and opens wherever it stops.
+Land on a gate held by your opponent and a battle starts — Ability cards, attribute
+advantages, attack and defence animation, and a line-by-line G-Power breakdown.
 
-За бои дают жетоны, на жетоны в магазине покупаются новые бакуганы и карты.
-Играть можно против ИИ или против живого соперника — по общей очереди или
-позвав друга напрямую.
+Battles pay out tokens; tokens buy new Bakugan and cards in the shop.
+You can play against the AI or against a live opponent — through the open queue
+or by inviting a friend directly.
 
 <div align="center">
-<img src="docs/arena.png" alt="Арена" width="86%">
-<br><sub>Арена: существа стоят на своих картах врат, у каждой карты видна стихия и хозяин.</sub>
+<img src="docs/arena.png" alt="The arena" width="86%">
+<br><sub>The arena: creatures stand on their Gate cards, each card showing its attribute and owner.</sub>
 <br><br>
-<img src="docs/battle.png" alt="Битва" width="86%">
-<br><sub>Битва: атакующий бьёт, защитник держит гранёный щит своей стихии.</sub>
+<img src="docs/battle.png" alt="A battle" width="86%">
+<br><sub>A battle: the attacker strikes, the defender holds a faceted barrier in their own attribute.</sub>
 </div>
 
 ---
 
-## Запуск
+## Running it
 
-Нужен только Python 3.8+. Ставить ничего не надо.
+All you need is Python 3.8+. Nothing to install.
 
 ```bash
 git clone https://github.com/loliksudoc/bakugan.git
@@ -54,178 +58,183 @@ cd bakugan
 python server.py
 ```
 
-Откройте <http://localhost:8123>. На Windows можно просто дважды кликнуть `start.bat`.
+Open <http://localhost:8123>. On Windows you can just double-click `start.bat`.
 
-При первом запуске рядом появится `bakugan.db` — в нём аккаунты, коллекции,
-жетоны, друзья, история боёв и покупок.
+The first run creates `bakugan.db` next to the server — it holds accounts, collections,
+tokens, friends, and the history of matches and purchases.
 
 ---
 
-## Возможности
+## Features
 
-### 🎮 Игровой процесс
-- **Бросок на навык.** Нажатием ловите сначала угол, потом силу. Шар катится с трением,
-  отскакивает от бортов и раскрывается там, где остановился. Промах — ход потерян.
-- **Карты врат по очереди.** В начале хода игрок выкладывает одну карту врат на
-  свободную площадку. На арене одновременно до трёх врат; на своих вратах бакуган
-  получает +50 G.
-- **Битва.** Каждый играет до одной карты способности, затем сравниваются итоговые
-  G-силы. При равенстве врата удерживает защитник. Кто первым заберёт трое врат — победил.
-- **8 типов врат** и **8 карт способностей**, у каждой своя стихия и «созвучие» +30 G.
+### 🎮 Gameplay
+- **Throwing is a skill.** One press locks the angle, the next locks the power. The ball
+  rolls with friction, bounces off the walls and opens where it comes to rest.
+  Miss and you lose the turn.
+- **Gate cards, laid in turn.** At the start of your turn you place one Gate card on a free
+  pad. Up to three gates sit on the arena at once, and your Bakugan gets +50 G on your own gate.
+- **Battle.** Each side may play one Ability card, then the final G-Powers are compared.
+  On a tie the defender keeps the gate. First to take three gates wins.
+- **8 gate types** and **8 ability cards**, each carrying an attribute and a +30 G *resonance* bonus.
 
-### 🐉 36 бакуганов, нарисованных кодом
-Десять архетипов тела — дракон, кошачьи, птицы, змеи, насекомые, големы, рыцари,
-водные, звери, духи. Из вида существа собирается силуэт: корпус, шея, голова, рога,
-крылья, хвост, лапы, светящиеся глаза. Стихия задаёт палитру, имя — приметы:
-четыре рога у Дельта Драго, три головы у Хайдраноида, клинки на плечах у Блейд Тигрерры.
+### 🐉 36 Bakugan drawn in code
+Ten body archetypes — dragon, feline, bird, serpent, insect, golem, knight, aquatic,
+beast, spirit. The creature's kind assembles the silhouette: torso, neck, head, horns,
+wings, tail, limbs, glowing eyes. The attribute sets the palette, the name adds
+distinguishing marks: four horns on Delta Dragonoid, three heads on Hydranoid,
+shoulder blades on Blade Tigrerra.
 
-Один и тот же рисунок работает и портретом на карточке, и фигурой на арене,
-и крупным бойцом в анимации боя.
+The same drawing serves as the portrait on a card, the full figure on the arena,
+and the large fighter in the battle animation.
 
-### ⚔️ Анимация атаки и защиты
-Изготовка → разбег со шлейфом → удар по гранёному щиту с искрами и тряской →
-щит трескается и рассыпается **или** атакующего отбрасывает назад →
-добивание или контратака → «ЗАЩИТА ПРОБИТА» / «АТАКА ОТБИТА».
-И только потом построчно раскрывается расчёт G-силы.
+### ⚔️ Attack and defence animation
+Ready stance → charge with an afterimage trail → impact on the faceted barrier with sparks
+and screen shake → the barrier cracks and shatters **or** the attacker is thrown back →
+a finishing blow or a counterattack → **GUARD BROKEN** / **ATTACK REPELLED**.
+Only then does the G-Power breakdown unfold line by line.
 
-### 🌐 Онлайн-бои
-Живой соперник через общую очередь или прямое приглашение другу.
-Обмен — длинный опрос: соединение висит до 18 секунд и просыпается, как только
-соперник сходил. Никаких WebSocket и внешних библиотек.
+### 🌐 Online matches
+A live opponent through the open queue, or a direct invitation to a friend.
+The exchange runs on long polling: the connection hangs for up to 18 seconds and wakes
+the moment the opponent moves. No WebSockets, no external libraries.
 
-Чтобы броски не разошлись, бросающий сам считает исход и присылает его вместе
-с углом и силой; случайные врата разыгрываются по общему сиду — итог битвы
-у обоих совпадает до единицы G. Карты способностей выбираются одновременно
-и вскрываются вместе.
+To keep the two clients from drifting apart, the thrower computes the outcome of the
+throw and sends it along with the angle and power; the random Chaos gate is rolled from
+a shared seed — so the battle result matches on both sides down to a single point of G.
+Ability cards are chosen simultaneously and revealed together.
 
-### 👥 Друзья
-Поиск по никнейму, заявки в друзья, статус «в сети» и «в бою», приглашение
-на бой напрямую мимо очереди. Никнеймы уникальны без оглядки на регистр
-и лишние пробелы — и для кириллицы тоже.
+### 👥 Friends
+Search by nickname, friend requests, "online" and "in battle" status, and a direct
+battle invite that skips the queue. Nicknames are unique regardless of letter case
+or stray spaces — for Cyrillic too, which SQLite's `COLLATE NOCASE` does not handle.
 
-### 🛒 Аккаунты, коллекция, магазин
-Регистрация с выбором стихии: стартовый набор целиком в ней — три бакугана,
-шесть карт врат, пять карт способностей и 100 жетонов.
-Пароли — PBKDF2-HMAC-SHA256, 120 000 итераций, своя соль на пользователя.
-Сессия — токен в HttpOnly-куке.
+### 🛒 Accounts, collection, shop
+Registration picks an attribute, and the whole starter kit comes in it: three Bakugan,
+six Gate cards, five Ability cards and 100 tokens.
+Passwords use PBKDF2-HMAC-SHA256, 120 000 iterations, with a per-user salt.
+The session is a token in an HttpOnly cookie.
 
-| Товар | Цена |
+| Item | Price |
 |---|---|
-| Бакуган ★☆☆ / ★★☆ / ★★★ | 🪙 120 / 260 / 500 |
-| Карта способности (любой тип × любая стихия) | 🪙 60 |
-| Карта врат (любой тип × любая стихия) | 🪙 45 |
-| Смена никнейма | 🪙 150 |
-| Смена стихии | 🪙 400 |
+| Bakugan ★☆☆ / ★★☆ / ★★★ | 🪙 120 / 260 / 500 |
+| Ability card (any type × any attribute) | 🪙 60 |
+| Gate card (any type × any attribute) | 🪙 45 |
+| Nickname change | 🪙 150 |
+| Attribute change | 🪙 400 |
 
-Все цены и проверки живут на сервере — клиент не может выдать себе жетоны или предмет.
+Every price and every check lives on the server — the client cannot grant itself
+tokens or items.
 
-### 🔊 Звук без единого файла
-Свист броска, шум катящегося шара с меняющимся тембром, отскоки, аккорд раскрытия,
-звон щита, хруст пробитого барьера, взрыв, фанфары — всё синтезируется
-осцилляторами и шумом через Web Audio.
+### 🔊 Sound without a single file
+The whistle of the throw, the rolling rumble that shifts timbre with speed, wall bounces,
+the opening chord, the ring of the barrier, the crunch of a broken guard, the explosion,
+the victory fanfare — all synthesised from oscillators and noise through Web Audio.
 
 ---
 
-## Правила
+## Rules
 
-**Стихии.** Пирус (Огонь) → Вентус (Ветер) → Субтерра (Земля) → Аквос (Вода) →
-Хаос (Тьма) → Гаус (Свет) → Пирус. Каждая бьёт следующую: **+100 G**.
+**Attributes.** Pyrus (Fire) → Ventus (Wind) → Subterra (Earth) → Aquos (Water) →
+Darkus (Darkness) → Haos (Light) → Pyrus. Each beats the next one round the circle: **+100 G**.
 
-**Команда.** В бой берутся 3 бакугана из коллекции, суммарная G-сила не выше **1150** —
-трёх легендарных не собрать.
+**Team.** You take 3 Bakugan from your collection into battle, with a combined G-Power
+of no more than **1150** — you cannot field three legendaries.
 
-**Итог битвы** = базовая G + бонус хозяина врат + эффект врат + созвучие стихии
-+ стихийное преимущество + карты способностей.
+**Battle total** = base G + gate owner bonus + gate effect + attribute resonance
++ attribute advantage + ability cards.
 
 <details>
-<summary><b>Карты врат</b></summary>
+<summary><b>Gate cards</b></summary>
 
-| Карта | Эффект |
+| Card | Effect |
 |---|---|
-| ◈ Обычные | без эффекта |
-| ❂ Стихийные | +150 G бакугану своей стихии |
-| ⇄ Обмен | базовые G меняются местами |
-| ▲ Аутсайдер | +250 G тому, у кого база слабее |
-| ⛨ Крепость | +200 G защитнику врат |
-| ✖ Тишина | карты способностей не работают |
-| ◐ Зеркало | стихийные преимущества не работают |
-| ✦ Хаос | обоим случайно от −100 до +200 G |
+| ◈ Plain | no effect |
+| ❂ Attribute | +150 G to a Bakugan of the gate's attribute |
+| ⇄ Swap | base G-Powers trade places |
+| ▲ Underdog | +250 G to whoever has the lower base |
+| ⛨ Fortress | +200 G to the gate's defender |
+| ✖ Silence | ability cards do not work |
+| ◐ Mirror | attribute advantages do not work |
+| ✦ Chaos | both sides get a random −100 to +200 G |
 
 </details>
 
 <details>
-<summary><b>Карты способностей</b></summary>
+<summary><b>Ability cards</b></summary>
 
-| Карта | Эффект |
+| Card | Effect |
 |---|---|
-| 💥 Взрывной удар | +150 G своему бакугану |
-| 🥀 Иссушение | −120 G бакугану соперника |
-| 🔄 Инверсия | итоговые G меняются местами |
-| 🛡 Барьер | отменяет способность соперника |
-| 🪞 Отражение | своя G = G соперника + 60 |
-| ⚡ Ярость стихии | +100, и ещё +150 при преимуществе стихии |
-| 🔓 Взлом врат | отменяет эффект карты врат |
-| ☯ Равновесие | обе G = среднему; играющий получает +80 |
+| 💥 Blast Strike | +150 G to your own Bakugan |
+| 🥀 Withering | −120 G to the opponent's Bakugan |
+| 🔄 Inversion | final G-Powers trade places |
+| 🛡 Barrier | cancels the opponent's ability |
+| 🪞 Reflection | your G = opponent's G + 60 |
+| ⚡ Attribute Fury | +100, and another +150 with an attribute advantage |
+| 🔓 Gate Hack | cancels the Gate card's effect |
+| ☯ Equilibrium | both G-Powers become their average; the player gets +80 |
 
 </details>
 
-**Управление.** Клик по карте врат → клик по подсвеченной площадке.
-Клик по бакугану → `Пробел` (угол) → `Пробел` (сила).
+**Controls.** Click a Gate card → click a highlighted pad.
+Click a Bakugan → `Space` (angle) → `Space` (power).
 
 ---
 
-## Как устроено
+## How it is built
 
 ```
-server.py           HTTP-сервер, JSON API и SQLite3 — только стандартная библиотека
-start.bat           запуск в один клик на Windows
-data/catalog.json   общий справочник: бакуганы, карты, цены, сложности
-index.html          разметка и все окна
-css/style.css       оформление
-js/api.js           обёртка над fetch
-js/catalog.js       загрузка справочника с сервера
-js/creatures.js     процедурная рисовка существ
-js/sound.js         синтезатор звуков на Web Audio
-js/auth.js          вход, регистрация, шапка профиля, магазин
-js/friends.js       друзья, заявки, приглашения на бой
-js/mp.js            онлайн-бой: очередь, синхронизация ходов, сдача
-js/game.js          игровая логика, физика броска, ИИ, анимация боя
-js/app.js           точка входа
+server.py           HTTP server, JSON API and SQLite3 — standard library only
+start.bat           one-click launch on Windows
+data/catalog.json   shared reference: Bakugan, cards, prices, difficulties
+index.html          markup and every dialog
+css/style.css       styling
+js/api.js           fetch wrapper
+js/catalog.js       loads the reference data from the server
+js/creatures.js     procedural creature drawing
+js/sound.js         Web Audio sound synthesiser
+js/auth.js          login, registration, profile header, shop
+js/friends.js       friends, requests, battle invites
+js/mp.js            online play: queue, move sync, surrender
+js/game.js          game logic, throw physics, AI, battle animation
+js/app.js           entry point
 ```
 
-`data/catalog.json` читают и клиент, и сервер — характеристики и цены не могут разойтись.
+`data/catalog.json` is read by both the client and the server, so stats and prices
+cannot drift apart.
 
 <details>
 <summary><b>API</b></summary>
 
-| Метод | Путь | Назначение |
+| Method | Path | Purpose |
 |---|---|---|
-| `GET` | `/api/catalog` | справочник игры |
-| `POST` | `/api/register` · `/api/login` · `/api/logout` | аккаунт |
-| `GET` | `/api/me` | профиль и коллекция |
-| `POST` | `/api/game/result` | итог боя с ИИ, начисление жетонов |
-| `POST` | `/api/shop/buy` | покупка |
-| `GET` | `/api/leaderboard` | топ бойцов |
-| `GET` | `/api/friends` | друзья, заявки, приглашения |
-| `POST` | `/api/friends/add` · `/accept` · `/remove` | заявки в друзья |
-| `POST` | `/api/mp/queue` · `GET /api/mp/status` | общая очередь |
-| `POST` | `/api/mp/invite` · `/api/mp/accept` | бой с другом |
-| `GET` | `/api/mp/sync` | длинный опрос ходов соперника |
-| `POST` | `/api/mp/move` · `/finish` · `/leave` | ход, итог, сдача |
+| `GET` | `/api/catalog` | game reference data |
+| `POST` | `/api/register` · `/api/login` · `/api/logout` | account |
+| `GET` | `/api/me` | profile and collection |
+| `POST` | `/api/game/result` | AI match result, token payout |
+| `POST` | `/api/shop/buy` | purchase |
+| `GET` | `/api/leaderboard` | top brawlers |
+| `GET` | `/api/friends` | friends, requests, invites |
+| `POST` | `/api/friends/add` · `/accept` · `/remove` | friend requests |
+| `POST` | `/api/mp/queue` · `GET /api/mp/status` | open queue |
+| `POST` | `/api/mp/invite` · `/api/mp/accept` | battle with a friend |
+| `GET` | `/api/mp/sync` | long poll for the opponent's moves |
+| `POST` | `/api/mp/move` · `/finish` · `/leave` | move, result, surrender |
 
-**Таблицы:** `users`, `sessions`, `user_bakugan`, `user_cards`, `matches`,
+**Tables:** `users`, `sessions`, `user_bakugan`, `user_cards`, `matches`,
 `purchases`, `friends`, `mp_queue`, `mp_match`, `mp_move`, `mp_seen`, `mp_invite`.
 
 </details>
 
-Сервер слушает только `127.0.0.1`. Порт меняется переменной окружения `BAKUGAN_PORT`.
+The server listens on `127.0.0.1` only. The port is set by the `BAKUGAN_PORT`
+environment variable.
 
-> **Для игры вдвоём** нужны две разные сессии браузера: два браузера или обычное
-> окно плюс приватное — иначе оба входа окажутся в одном аккаунте.
+> **To play against another person** you need two separate browser sessions: two
+> browsers, or one normal window plus a private one — otherwise both logins land
+> in the same account.
 
 ---
 
 <div align="center">
-<sub>Сделано ради удовольствия. Bakugan — торговая марка своих правообладателей;
-это фанатский любительский проект, не связанный с ними.</sub>
+<sub>Built for the fun of it. Bakugan is a trademark of its respective owners;
+this is an unaffiliated fan project.</sub>
 </div>
